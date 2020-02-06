@@ -2,6 +2,8 @@ const moment = require('moment');
 const crocks = require('crocks');
 const {ExpenseModel} = require('../db/models');
 
+const USER_ID = '5e3c45916a19c9d5932c9df9';
+
 const {not, isNil} = crocks;
 
 const regexp = /\$(\d+.*) en (.*) (\d{2}:\d{2}). (\d{2}\/\d{2}\/\d{4})/;

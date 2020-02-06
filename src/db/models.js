@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
   name: String,
-  lastFetch: {type: Date, default: Date.now()},
+  lastFetch: {type: Date, default: null},
 });
 
 const ExpenseSchema = new mongoose.Schema({
