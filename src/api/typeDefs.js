@@ -5,7 +5,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User!]!
-    expenses: [Expense!]!
+    expenses(month: String!): [Expense!]!
   }
 
   type Mutation {

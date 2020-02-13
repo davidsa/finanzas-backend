@@ -11,8 +11,9 @@ const resolvers = {
     users(_, args) {
       return UserModel.find();
     },
-    expenses() {
-      return ExpenseModel.getMonthExpenses(USER_ID);
+    expenses(_, {month}) {
+      console.log(`Month: ${month}`);
+      return ExpenseModel.getMonthExpenses(USER_ID, month);
     },
   },
   Mutation: {

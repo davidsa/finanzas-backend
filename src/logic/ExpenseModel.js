@@ -5,7 +5,7 @@ const {ExpenseModel} = require('../db/models');
 
 const USER_ID = '5e3c45916a19c9d5932c9df9';
 
-const {not, isNil} = crocks;
+const {Pair, curry, not, isNil} = crocks;
 
 const regexp = /\$(\d+.*) en (.*) (\d{2}:\d{2}). (\d{2}\/\d{2}\/\d{4})/;
 
@@ -21,21 +21,38 @@ const getExpenseModel = ([_, value, place, hour, date]) => ({
   place,
 });
 
-const startOfMonth = moment()
-  .startOf('month')
-  .valueOf();
+const currentMonth = moment().format('MMMM');
 
-const endOfMonth = moment()
-  .endOf('month')
-  .valueOf();
+const getStartOfMonth = curry((format, date) =>
+  moment(date, format)
+    .startOf('month')
+    .valueOf(),
+);
+
+const getEndOfMonth = curry((format, date) =>
+  moment(date, format)
+    .endOf('month')
+    .valueOf(),
+);
+
+const startEndObj = curry((start, end) => ({start, end}));
+
+const getStartAndEndOfMonth = monthName =>
+  Pair(monthName, monthName)
+    .bimap(getStartOfMonth('MMMM'), getEndOfMonth('MMMM'))
+    .merge(startEndObj);
+
+const findMonthExpenses = curry((userId, {start, end}) =>
+  ExpenseModel.find({
+    userId,
+    date: {$gte: start, $lt: end},
+  }).sort('-date'),
+);
 
 module.exports.addExpenses = ExpenseModel.insertMany.bind(ExpenseModel);
 
-module.exports.getMonthExpenses = userId =>
-  ExpenseModel.find({
-    userId,
-    date: {$gte: startOfMonth, $lt: endOfMonth},
-  }).sort('-date');
+module.exports.getMonthExpenses = (userId, monthName = currentMonth) =>
+  findMonthExpenses(userId, getStartAndEndOfMonth(monthName));
 
 module.exports.smsListToExpenses = smsList =>
   smsList

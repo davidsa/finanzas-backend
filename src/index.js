@@ -1,5 +1,7 @@
 require('dotenv').config();
 require('./utils/numeralInit');
+require('moment/locale/es');
+
 const mongoose = require('mongoose');
 const {ApolloServer} = require('apollo-server');
 
