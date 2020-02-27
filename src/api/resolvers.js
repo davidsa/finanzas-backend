@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const UserModel = require('../logic/UserModel');
-const ExpenseModel = require('../logic/ExpenseModel');
+const UserModel = require("../logic/UserModel");
+const ExpenseModel = require("../logic/ExpenseModel");
 
-const USER_ID = '5e3c45916a19c9d5932c9df9';
+const USER_ID = "5e3c45916a19c9d5932c9df9";
 
 const resolvers = {
   Date: require('../utils/scalarDate'),
