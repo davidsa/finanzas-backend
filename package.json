@@ -11,7 +11,7 @@
     "crocks": "^0.12.4",
     "dotenv": "^8.2.0",
     "graphql": "^14.6.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.8.10",
     "nodemon": "^2.0.2",
     "numeral": "^2.0.6",
